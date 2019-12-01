@@ -8,12 +8,12 @@ A. Lambdaの実行IAMロールにCWLadminポリシーがない
 ### Q, ConfigRuleをトリガーにSNSトピックが動かない
 ------------------------------------------------------------
 A. SNStopicのアクセスポリシーにConfigからのPublish権を与えて
-{
-    "Sid": "configRuleToSNS_publish",
-    "Effect": "Allow",
-    "Principal": {
-        "AWS": "<<ConfigのIAMロールARN値>>"
-    },
-    "Action": "SNS.Publish",
-    "Resource": "<<SNSのトピックARN値>>"
-}
+    {
+        "Sid": "configRuleToSNS_publish",
+        "Effect": "Allow",
+        "Principal": {
+            "AWS": "<<ConfigのIAMロールARN値>>"
+        },
+        "Action": "SNS.Publish",
+        "Resource": "<<SNSのトピックARN値>>"
+    }
