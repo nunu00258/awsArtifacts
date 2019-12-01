@@ -1,0 +1,29 @@
+---
+description: Exec AWS-StopEC2Instances
+schemaVersion: "0.3"
+assumeRole: "{{ AutomationAssumeRole }}"
+parameters:
+  AutoStopTime:
+    type: String
+    default: managed-Iris
+    description: (Required) Iris or Gerbera
+    allowedValues:
+    - managed-Iris
+    - managed-Gerbera
+  AutomationAssumeRole:
+    type: String
+    description: (Optional) The ARN of the role that allows Automation to perform the actions on your behalf.
+    default: ""
+mainSteps:
+  - name: StopEC2Instances
+    action: aws:executeAwsApi
+    inputs:
+      Service: ssm
+      Api: StartAutomationExecution
+      DocumentName: AWS-StopEC2Instance
+      TargetParameterName: "InstanceId"
+      Targets:
+        -
+           Key: tag:AutoStopTime
+           Values: 
+             - "{{ AutoStopTime }}"
