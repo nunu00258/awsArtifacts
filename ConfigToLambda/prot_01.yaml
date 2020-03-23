@@ -1,0 +1,36 @@
+description: delete defaltVPC for All regions
+schemaVersion: '0.3'
+#assumeRole: "{{ AutomationAssumeRole }}"
+assumeRole: 'arn:aws:iam::762736439118:role/sDoc_InvokeLambdaFunction'
+parameters:
+  SSOUserAccessKeyId:
+    type: String
+    description: none
+  SSOUserSecretAccessKey:
+    type: String
+    description: none
+  SSOUserSessionToken:
+    type: String
+    description: none
+#  AutomationAssumeRole:
+#    type: String
+#    description: (Optional) The ARN of the role that allows Automation to perform the actions on your behalf.
+#    default: ""
+mainSteps:
+  - name: step01
+    action: 'aws:invokeLambdaFunction'
+    maxAttempts: 1
+    timeoutSeconds: 600
+    onFailure: Abort
+    inputs:
+      FunctionName: Automation_Prot01Function
+      Payload: |
+        {
+          "SSOUserCredentials": {
+            "AccessKeyId": "{{ SSOUserAccessKeyId  }}",
+            "SecretAccessKey": "{{ SSOUserSecretAccessKey  }}",
+            "SessionToken": "{{ SSOUserSessionToken  }}"
+          }
+        }
+    isEnd: true
+
